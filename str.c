@@ -19,6 +19,5 @@ Print string[start:end]*repeat");
   res=PyString_AsString(expr[2]);
   printf("'%s'\n",res);
   for(i=0; i<3; i++) Py_CLEAR(expr[i]);
-  free(res);
   return 0;
 }
