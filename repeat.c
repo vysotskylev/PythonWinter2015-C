@@ -1,5 +1,7 @@
 #include <Python.h>
 
+static PyObject *RepeatError;
+
 static PyObject *
 Rep(PyObject *self, PyObject *args) {
   int i, s, e, r;
@@ -7,13 +9,15 @@ Rep(PyObject *self, PyObject *args) {
   PyObject *objret;
 
   if (!PyArg_ParseTuple(args, "siii", &buf, &s, &e, &r)) {
-    fprintf(stderr, "DEBUG: PyArg_ParseTuple filed");
+    fprintf(stderr, "DEBUG: PyArg_ParseTuple filed\n");
     return NULL;
   }
 
   // check indexes
-  if(s>=e || r<1)
-    ret = "";
+  if(s>=e || r<1) {
+    PyErr_SetString(RepeatError, "System command failed");
+    return NULL;
+  }
   else {
     s = s>0?s:0; e=strlen(buf)<e?strlen(buf):e;
     ret = malloc((e-s)*r+1);
@@ -33,7 +37,13 @@ static PyMethodDef RepeatMethods[] = {
 PyMODINIT_FUNC
 initrepeat(void)
 {
-  Py_InitModule3("repeat", RepeatMethods,"Test moduel for repeating substring");
+  PyObject *module;
+
+  module = Py_InitModule3("repeat", RepeatMethods,"Test module for repeating substring");
+  if(module == NULL) return;
+  RepeatError = PyErr_NewException("repeat.error", NULL, NULL);
+  Py_INCREF(RepeatError);
+  PyModule_AddObject(module, "error", RepeatError);
 }
 
 int
