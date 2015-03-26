@@ -1,4 +1,4 @@
-CFLAGS+=-I/usr/include/python2.7 -g -O0
+CFLAGS+=-I/usr/include/python2.7 -g -O0 -Wall
 LDLIBS+=-lpython2.7
 
 GENERATED=str *.so
