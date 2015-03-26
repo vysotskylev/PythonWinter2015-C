@@ -1,7 +1,7 @@
 #include <Python.h>
 
 static PyObject *
-repeat_repeat(PyObject *self, PyObject *args) {
+Rep(PyObject *self, PyObject *args) {
   int i, s, e, r;
   char *buf, *ret;
   PyObject *objret;
@@ -26,14 +26,14 @@ repeat_repeat(PyObject *self, PyObject *args) {
 }
 
 static PyMethodDef RepeatMethods[] = {
-    {"repeat",  repeat_repeat, METH_VARARGS, "Repeat a substring."},
+    {"repeat",  Rep, METH_VARARGS, "repeat(buf, s, e, r)\n\nReturn buf[s:e]*r"},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
 PyMODINIT_FUNC
 initrepeat(void)
 {
-  Py_InitModule("repeat", RepeatMethods);
+  Py_InitModule3("repeat", RepeatMethods,"Test moduel for repeating substring");
 }
 
 int

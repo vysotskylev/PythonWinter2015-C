@@ -11,6 +11,7 @@ clean:
 test:	all
 	valgrind ./str qwert 1 3 4
 	valgrind python testrepeat.py
+	python -c 'import repeat; help(repeat)' | cat
 
 repeat.so: repeat.c
 	$(CC) $< $(CFLAGS) -o $@ -shared -fPIC $(LDFLAGS) $(LDLIBS)
