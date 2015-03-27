@@ -1,7 +1,6 @@
 import woexp
 
-exp = woexp.WordExp()
-exp.expand("[p-t]*.*")
+exp = woexp.WordExp("[p-t]*.*")
 print exp.result()
-exp.expand("*.NONEXIST")
+exp = woexp.WordExp("*.NONEXIST")
 print exp.result()
