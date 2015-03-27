@@ -18,8 +18,11 @@ demo:	all
 	./str qwert 1 3 4
 	python testrepeat.py
 	./woex
+	python testwoexp.py
 
 test:	all
 	valgrind ./str qwert 1 3 4
 	valgrind python testrepeat.py
-	python -c 'import repeat; help(repeat)' | cat
+	python -c 'import repeat; print dir(repeat); help(repeat)' | cat
+	valgrind python testwoexp.py
+	python -c 'import woexp; print dir(woexp); help(woexp)' | cat
