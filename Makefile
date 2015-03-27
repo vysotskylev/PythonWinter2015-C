@@ -1,9 +1,15 @@
 CFLAGS+=-I/usr/include/python2.7 -g -O0 -Wall
 LDLIBS+=-lpython2.7
 
-GENERATED=str *.so woex
+GENERATED=str *.so woex woexp.c
 
-all:	str repeat.so woex
+all:	str repeat.so woex woexp.so
+
+%.c:	%.pyx
+	cython $< -o $@
+
+%.so: %.c
+	$(CC) $< $(CFLAGS) -o $@ -shared -fPIC $(LDFLAGS) $(LDLIBS)
 
 clean:
 	rm -f $(GENERATED) *.o
@@ -17,6 +23,3 @@ test:	all
 	valgrind ./str qwert 1 3 4
 	valgrind python testrepeat.py
 	python -c 'import repeat; help(repeat)' | cat
-
-repeat.so: repeat.c
-	$(CC) $< $(CFLAGS) -o $@ -shared -fPIC $(LDFLAGS) $(LDLIBS)
