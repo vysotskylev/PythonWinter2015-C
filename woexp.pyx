@@ -2,7 +2,7 @@ cimport woexp
 
 __doc__ = 'Primitive wordexp.h wrapper'
 
-cpdef enum:
+cdef enum:
     WRDE_DOOFFS = (1 << 0)	#  Insert PWORDEXP->we_offs NULLs.
     WRDE_APPEND = (1 << 1)	#  Append to results of a previous call.
     WRDE_NOCMD = (1 << 2)	#  Don't do command substitution.
