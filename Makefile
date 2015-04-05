@@ -1,9 +1,9 @@
-CFLAGS+=-I/usr/include/python2.7 -g -O0 -Wall
+CFLAGS+=-std=c99 -I/usr/include/python2.7 -g -O0 -Wall
 LDLIBS+=-lpython2.7
 
 GENERATED=str *.so woex woexp.c
 
-all:	str repeat.so woex woexp.so
+all:	list str repeat.so woex woexp.so ftw.so
 
 %.c:	%.pyx
 	cython $< -o $@
@@ -20,6 +20,8 @@ demo:	all
 	./woex
 	python testwoexp.py
 
+test_woexp: all
+	valgrind python testwoexp.py
 test:	all
 	valgrind ./str qwert 1 3 4
 	valgrind python testrepeat.py
